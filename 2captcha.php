@@ -6,35 +6,35 @@
 
 class _2Captcha {
 	private $image64bits,
-					$id,
-					$text,
-					$key,
-					$errors,
-					$sendingErrors,
-					$readingErrors;
+		$id,
+		$text,
+		$key,
+		$errors,
+		$sendingErrors,
+		$readingErrors;
 
 	public function __construct() {
 		$this->errors = array();
 
 		$this->sendingErrors = array(
-		  'ERROR_WRONG_USER_KEY' 		 		   => 'Wrong "key" parameter format, it should contain 32 symbols',
-		  'ERROR_KEY_DOES_NOT_EXIST' 			 => 'The "key" doesn’t exist',
-		  'ERROR_ZERO_BALANCE' 		      	 => 'You don’t have money on your account',
-		  'ERROR_NO_SLOT_AVAILABLE'  			 => 'The current bid is higher than the maximum bid set for your account.',
-		  'ERROR_ZERO_CAPTCHA_FILESIZE' 	 => 'CAPTCHA size is less than 100 bites',
+		  'ERROR_WRONG_USER_KEY' 	   => 'Wrong "key" parameter format, it should contain 32 symbols',
+		  'ERROR_KEY_DOES_NOT_EXIST' 	   => 'The "key" doesn’t exist',
+		  'ERROR_ZERO_BALANCE' 		   => 'You don’t have money on your account',
+		  'ERROR_NO_SLOT_AVAILABLE'  	   => 'The current bid is higher than the maximum bid set for your account.',
+		  'ERROR_ZERO_CAPTCHA_FILESIZE'    => 'CAPTCHA size is less than 100 bites',
 		  'ERROR_TOO_BIG_CAPTCHA_FILESIZE' => 'CAPTCHA size is more than 100 Kbites',
-		  'ERROR_WRONG_FILE_EXTENSION' 		 => 'The CAPTCHA has a wrong extension. Possible extensions are: jpg,jpeg,gif,png',
+		  'ERROR_WRONG_FILE_EXTENSION' 	   => 'The CAPTCHA has a wrong extension. Possible extensions are: jpg,jpeg,gif,png',
 		  'ERROR_IMAGE_TYPE_NOT_SUPPORTED' => 'The server cannot recognize the CAPTCHA file type.',
-		  'ERROR_IP_NOT_ALLOWED' 					 => 'The request has sent from the IP that is not on the list of your IPs. Check the list of your IPs in the system.',
-		  'IP_BANNED' 										 => 'The IP address you\'re trying to access our server with is banned due to many frequent attempts to access the 
+		  'ERROR_IP_NOT_ALLOWED' 	   => 'The request has sent from the IP that is not on the list of your IPs. Check the list of your IPs in the system.',
+		  'IP_BANNED' 			   => 'The IP address you\'re trying to access our server with is banned due to many frequent attempts to access the 
 		  																		 server using wrong authorization keys. To lift the ban, please, contact our support team via email: support@2captcha.com'
 		);
 
 		$this->readingErrors = array(
-			'CAPCHA_NOT_READY' 					=> 'CAPTCHA is being solved, repeat the request several seconds later',
-			'ERROR_KEY_DOES_NOT_EXIST'	=> 'You used the wrong key in the query',
-			'ERROR_WRONG_ID_FORMAT' 		=> 'Wrong format ID CAPTCHA. ID must contain only numbers',
-			'ERROR_CAPTCHA_UNSOLVABLE'  => 'Captcha could not solve three different employee. Funds for this captcha not'
+			'CAPCHA_NOT_READY' 	   => 'CAPTCHA is being solved, repeat the request several seconds later',
+			'ERROR_KEY_DOES_NOT_EXIST' => 'You used the wrong key in the query',
+			'ERROR_WRONG_ID_FORMAT'    => 'Wrong format ID CAPTCHA. ID must contain only numbers',
+			'ERROR_CAPTCHA_UNSOLVABLE' => 'Captcha could not solve three different employee. Funds for this captcha not'
 		);
 	}
 
@@ -92,8 +92,8 @@ class _2Captcha {
 
 	private function send() {
 		$info = $this->curl('http://2captcha.com/in.php', array( 'method' => 'base64', 
-																											'key'    => $this->key,
-																											'body'   => $this->image ));
+						 			 'key'    => $this->key,
+									 'body'   => $this->image ));
 
 		if( !preg_match('|OK|', $info) ) {
 			$this->errors[] = $this->sendingErrors[ $info ];
