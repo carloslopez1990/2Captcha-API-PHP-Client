@@ -101,7 +101,7 @@ class _2Captcha {
 		}
 		else {
 			$info = explode('|', $info);
-			$this->id = (int)$info[1];
+			$this->id = $info[1];
 			return true;
 		}
 	}
